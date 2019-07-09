@@ -1,12 +1,6 @@
 import test from 'ava'
 import stepPromisedLoopModule from '../src'
 
-/* Add environmental vars */
-// import path from 'path';
-// require('dotenv').config({
-//   path: path.join(__dirname, '../config/.env')
-// });
-
 const $internals = {
   banlist: [],
   steps: (t) => ({
@@ -98,7 +92,7 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
       t.log('Resolved the loop stop after 3 seconds.')
       promiseLoop.stopAtEnd()
       resolve()
-    }, 15000) // eslint-disable-line no-magic-numbers
+    }, 15000)
   })
 
   // Check if object init correctly
@@ -109,7 +103,6 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
   try {
     t.log('Start the loop.')
     await Promise.all([promiseLoop.start(), stopAfter3Seconds])
-    // const data = await promiseLoop.start();
   } catch (error) {
     t.log(error)
   }
@@ -186,7 +179,7 @@ test('Test for the Promise Loop - Long Running Step.', async (t) => {
       t.log('Resolved the step, stop after 2 seconds.')
       promiseLoop.stop()
       resolve()
-    }, 2000) // eslint-disable-line no-magic-numbers
+    }, 2000)
   })
 
   // Check if object init correctly
