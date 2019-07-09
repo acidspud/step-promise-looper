@@ -1,0 +1,29 @@
+{
+  "name": "step-promise-looper",
+  "description": "Simple looping mechanism that steps through an array of Promises.",
+  "version": "0.0.2",
+  "license": "ISC",
+  "keywords": [
+    "promise",
+    "loop"
+  ],
+  "repository": "https://github.com/acidspud/step-promise-looper",
+  "author": "Jaques Horn <jaqueshorn@gmail.com>",
+  "dependencies": {
+    "assert": "*",
+    "dotenv": "*"
+  },
+  "devDependencies": {
+    "ava": "^2.2.0",
+    "eslint": "^6.0.1",
+    "standard": "^12.0.1",
+    "standard-version": "^6.0.1"
+  },
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "standard-version",
+    "prepublish": "yarn build",
+    "release": "standard-version && yarn build && git push --follow-tags && npm publish",
+    "test": "standard && ava --verbose --serial tests/index.js"
+  }
+}
