@@ -1,7 +1,7 @@
 {
   "name": "step-promise-looper",
   "description": "Simple looping mechanism that steps through an array of Promises.",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "license": "ISC",
   "keywords": [
     "promise",
@@ -21,7 +21,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "standard-version",
+    "build": "standard",
     "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish",
     "test": "standard && ava --verbose --serial tests/index.js"
