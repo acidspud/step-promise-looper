@@ -1,21 +1,5 @@
-# step-promise-looper
-Simple looping mechanism that steps through an array of Promises.
-
-## Install:
-```
-npm install step-promise-looper --save
-```
-
-## Initialize:
-
-```
 const stepPromiseLooper = require('step-promise-looper')
-```
 
-## Create some steps:
-Array of promises
-
-```
 const looper = stepPromiseLooper({
   steps: [
     (result) => {
@@ -34,24 +18,13 @@ const looper = stepPromiseLooper({
   ]
 })
 
-```
-
-## Control it:
-
-```
-// start the loop
-looper.start();
+looper.start()
 
 // run through the steps only once
-looper.runOnce()
+// looper.runOnce()
 
 // force the loop to stop.
-looper.stop()
+// looper.stop()
 
 // gracefully stop the loop on the last step.
-looper.stopAtEnd()
-
-```
-
-### Try It
-* Visit the module at [npmjs.com](https://www.npmjs.com/package/step-promise-looper)
+// looper.stopAtEnd()
