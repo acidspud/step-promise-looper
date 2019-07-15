@@ -1,7 +1,7 @@
 {
   "name": "step-promise-looper",
   "description": "Simple looping mechanism that steps through an array of Promises.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "ISC",
   "keywords": [
     "promise",
