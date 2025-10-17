@@ -29,7 +29,7 @@ const $internals = {
     // Last step to indicate end of steps.
     loop = loop.then((result) => {
       status.running = false
-      return Promise.resolve(result)
+      return result
     })
 
     return loop
@@ -40,7 +40,7 @@ const $internals = {
     return runOnce().then((result) => {
       if (status.stopAtEnd) {
         status.running = false
-        return Promise.resolve(result)
+        return result
       }
 
       return runLoop()
