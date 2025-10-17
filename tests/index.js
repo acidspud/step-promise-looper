@@ -2,7 +2,6 @@ import test from 'ava'
 import stepPromisedLoopModule from '../src/index.js'
 
 const $internals = {
-  banlist: [],
   steps: (t) => ({
     success: [
       (result) => {
@@ -84,7 +83,8 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
   const { success } = steps(t)
 
   const promiseLoop = stepPromisedLoopModule({
-    steps: success
+    steps: success,
+    logger: console
   })
 
   const stopAfter3Seconds = new Promise((resolve) => {
@@ -190,6 +190,66 @@ test('Test for the Promise Loop - Long Running Step.', async (t) => {
   try {
     t.log('Start the processing steps. Then after 2 seconds, stop it.')
     const data = await Promise.all([stopAfter2Seconds, await promiseLoop.runOnce()])
+
+    t.log('Should not reach this spot.', data)
+    t.fail()
+  } catch (error) {
+    t.log(error)
+    t.pass()
+  }
+
+  t.log('End of loop.')
+})
+
+test('Test for the Promise Loop - Continue on Error.', async (t) => {
+  const { steps } = $internals
+  const { fail } = steps(t)
+
+  const promiseLoop = stepPromisedLoopModule({
+    steps: fail,
+    logger: console,
+    errorHandling: 'continue'
+  })
+
+  // Check if object init correctly
+  t.log('Init - Continue on Error.')
+  t.is(typeof promiseLoop, 'object')
+
+  // Run through the steps once
+  try {
+    t.log('Start the loop.')
+
+    const data = await promiseLoop.runOnce()
+
+    t.log('Should reach this spot.', data)
+    t.pass()
+  } catch (error) {
+    t.log(error)
+    t.fail(error)
+  }
+
+  t.log('End of loop.')
+})
+
+test('Test for the Promise Loop - Stop on Error.', async (t) => {
+  const { steps } = $internals
+  const { fail } = steps(t)
+
+  const promiseLoop = stepPromisedLoopModule({
+    steps: fail,
+    logger: console,
+    errorHandling: 'stop'
+  })
+
+  // Check if object init correctly
+  t.log('Init - Stop on Error.')
+  t.is(typeof promiseLoop, 'object')
+
+  // Run through the steps once
+  try {
+    t.log('Start the loop.')
+
+    const data = await promiseLoop.runOnce()
 
     t.log('Should not reach this spot.', data)
     t.fail()

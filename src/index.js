@@ -1,19 +1,37 @@
+// Error handling Enum
+const ERROR_HANDLING = {
+  continue: 'continue',
+  stop: 'stop'
+}
+Object.freeze(ERROR_HANDLING)
+
 const $internals = {
   status: {
     running: false,
     stopAtEnd: false
   },
+  logger: console,
+  errorHandling: ERROR_HANDLING.continue,
   steps: [],
   loop: Promise.resolve(),
   createStep: (index) => {
     return (result) => {
-      const { steps, status } = $internals
+      const { steps, status, errorHandling } = $internals
 
       if (!status.running) {
         return Promise.reject(new Error('Loop stop forced.'))
       }
 
-      return steps[index](result)
+      return steps[index](result).catch((error) => {
+        if (errorHandling === ERROR_HANDLING.continue) {
+          $internals.logger.warn(`Step ${index + 1} failed, continuing loop. Error:`, error)
+          return result
+        } else {
+          $internals.logger.error(`Step ${index + 1} failed, stopping loop. Error:`, error)
+          status.running = false
+          throw error
+        }
+      })
     }
   },
   runOnce: () => {
@@ -48,10 +66,25 @@ const $internals = {
   },
   init: (options) => {
     if (options) {
-      const { steps } = options
+      const {
+        errorHandling,
+        logger,
+        steps
+      } = options
 
+      // Add Steps from options
       if (steps) {
         $internals.steps = steps
+      }
+
+      // Add Error Handling method from options
+      if (errorHandling) {
+        $internals.errorHandling = errorHandling
+      }
+
+      // Add Logger from options
+      if (logger) {
+        $internals.logger = logger
       }
     }
 

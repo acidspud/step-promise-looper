@@ -21,6 +21,7 @@
     "build": "yarn lint",
     "prepublish": "yarn lint",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish",
-    "test": "ava --verbose --serial tests/index.js"
+    "test": "ava --serial",
+    "test-all": "ava --verbose --serial tests/index.js"
   }
 }
