@@ -1,7 +1,7 @@
 {
   "name": "step-promise-looper",
   "description": "Simple looping mechanism that steps through an array of Promises.",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "license": "ISC",
   "keywords": [
     "promise",
@@ -22,6 +22,7 @@
     "prepublish": "yarn lint",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish",
     "test": "ava --serial",
-    "test-all": "ava --verbose --serial tests/index.js"
+    "test-all": "ava --verbose --serial tests/index.js",
+    "example": "yarn node ./example/index.js"
   }
 }
