@@ -53,15 +53,21 @@ const $internals = {
     return loop
   },
   runLoop: async () => {
-    const { runOnce, runLoop, status } = $internals
+    const { runOnce, status } = $internals
 
-    return runOnce().then((result) => {
-      if (status.stopAtEnd) {
-        status.running = false
-        return result
+    return new Promise((resolve, reject) => {
+      const next = () => {
+        runOnce()
+          .then((result) => {
+            if (status.stopAtEnd) {
+              status.running = false
+              return resolve(result)
+            }
+            next()
+          })
       }
 
-      return runLoop()
+      next()
     })
   },
   init: (options) => {

@@ -11,7 +11,7 @@ const $internals = {
             resolve({
               msg: 'Step1 - testData!!'
             })
-          }, 3000)
+          }, 1000)
         })
       },
       (result) => {
@@ -82,17 +82,29 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
   const { steps } = $internals
   const { success } = steps(t)
 
+  let loopCounter = 0
+
+  const counterStep = (result) => {
+    t.log('Step4: result: ', result)
+    loopCounter++
+    return Promise.resolve({
+      msg: 'Step4 - testData!!'
+    })
+  }
+
+  success.push(counterStep)
+
   const promiseLoop = stepPromisedLoopModule({
     steps: success,
     logger: console
   })
 
-  const stopAfter3Seconds = new Promise((resolve) => {
+  const stopAfter5Seconds = new Promise((resolve) => {
     setTimeout(() => {
-      t.log('Resolved the loop stop after 3 seconds.')
+      t.log('Resolved the loop stop after 5 seconds.')
       promiseLoop.stopAtEnd()
       resolve()
-    }, 3000)
+    }, 5000)
   })
 
   // Check if object init correctly
@@ -102,11 +114,12 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
   // Run through the steps once
   try {
     t.log('Start the loop.')
-    await Promise.all([promiseLoop.start(), stopAfter3Seconds])
+    await Promise.all([promiseLoop.start(), stopAfter5Seconds])
   } catch (error) {
     t.log(error)
   }
 
+  t.is(loopCounter, 2)
   t.log('End of loop.')
 })
 
