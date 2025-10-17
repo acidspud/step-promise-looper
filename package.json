@@ -9,21 +9,17 @@
   ],
   "repository": "https://github.com/acidspud/step-promise-looper",
   "author": "Jaques Horn <jaqueshorn@gmail.com>",
-  "dependencies": {
-    "assert": "*",
-    "dotenv": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ava": "^2.2.0",
-    "eslint": "^6.0.1",
-    "standard": "^12.0.1",
-    "standard-version": "^6.0.1"
+    "ava": "^6.4.1",
+    "standard": "^17.1.2",
+    "standard-version": "^9.5.0"
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "standard",
-    "prepublish": "yarn build",
+    "lint": "standard",
+    "prepublish": "yarn lint",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish",
-    "test": "standard && ava --verbose --serial tests/index.js"
+    "test": "ava --verbose --serial tests/index.js"
   }
 }
