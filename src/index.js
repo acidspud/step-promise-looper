@@ -19,7 +19,7 @@ const $internals = {
       const { steps, status, errorHandling } = $internals
 
       if (!status.running) {
-        return Promise.reject(new Error('Loop stop forced.'))
+        return Promise.reject(new Error('Operation halted: loop execution was stopped by the user.'))
       }
 
       return steps[index](result).catch((error) => {
