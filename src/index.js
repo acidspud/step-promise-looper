@@ -1,4 +1,3 @@
-
 const $internals = {
   status: {
     running: false,

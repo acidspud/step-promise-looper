@@ -1,5 +1,5 @@
 import test from 'ava'
-import stepPromisedLoopModule from '../src'
+import stepPromisedLoopModule from '../src/index.js'
 
 const $internals = {
   banlist: [],
@@ -12,7 +12,7 @@ const $internals = {
             resolve({
               msg: 'Step1 - testData!!'
             })
-          }, 1000)
+          }, 3000)
         })
       },
       (result) => {
@@ -23,7 +23,7 @@ const $internals = {
             resolve({
               msg: 'Step2 - testData!!'
             })
-          }, 1000)
+          }, 2000)
         })
       },
       (result) => {
@@ -92,7 +92,7 @@ test('Test for the Promise Loop - start LOOP', async (t) => {
       t.log('Resolved the loop stop after 3 seconds.')
       promiseLoop.stopAtEnd()
       resolve()
-    }, 15000)
+    }, 3000)
   })
 
   // Check if object init correctly
